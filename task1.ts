@@ -13,71 +13,59 @@ interface User {
   }
   
   class UserService {
-    // Initialize an empty array to store the users
-    private users: User[];
+    private users: User[];  // Initializing an empty array to store the users data
   
     constructor() {
       this.users = [];
     }
   
-    // Add a user to the users array
-    public addUser(user: User): void {
+    
+    public addUser(user: User): void {  // Adding user to user array 
       this.users.push(user);
     }
   
-    // Get a user by ID from the users array
-    public getUserById(id: number): User | undefined {
+    
+    public getUserById(id: number): User | undefined {  // Getting user by ID from the array 
       return this.users.find((user) => user.id === id);
     }
   
-    // Get devices that were logged in at a given timestamp, optionally filtered by user ID
-    public getUserDevicesByLoggedIn(
+    
+    public getUserDevicesByLoggedIn(  // Getting details of the devices that were logged in at a timespan
       loggedIn: Date,
       userId?: number
     ): Device[] | undefined {
-      // Get the user by ID, if specified
-      const user = userId ? this.getUserById(userId) : undefined;
-      // If a user was specified, filter the devices array to only include devices that were logged in at the given timestamp
-      if (user) {
+      const user = userId ? this.getUserById(userId) : undefined;   // Getting the user by ID
+      if (user) {  // Filter the devices array to only include deives that were logged in at the given time
         return user.devices.filter(
           (device) => device.loggedIn.getTime() === loggedIn.getTime()
         );
       }
-      // If no user was specified, return undefined
-      return undefined;
+      return undefined; // Return  undefined if the no user was specified
     }
   
-    // Get devices that were logged out at a given timestamp, optionally filtered by user ID
-    public getUserDevicesByLoggedOut(
+    public getUserDevicesByLoggedOut(  
       loggedOut: Date,
       userId?: number
     ): Device[] | undefined {
-      // Get the user by ID, if specified
       const user = userId ? this.getUserById(userId) : undefined;
-      // If a user was specified, filter the devices array to only include devices that were logged out at the given timestamp
       if (user) {
         return user.devices.filter(
           (device) => device.loggedOut.getTime() === loggedOut.getTime()
         );
       }
-      // If no user was specified, return undefined
       return undefined;
     }
   
-    // Get devices that were last seen at a given timestamp, optionally filtered by user ID
     public getUserDevicesByLastSeenAt(
       lastSeenAt: Date,
       userId?: number
     ): Device[] | undefined {
-      // Get the user by ID, if specified
       const user = userId ? this.getUserById(userId) : undefined;
-      // If a user was specified, filter the devices array to only include devices that were last seen at the given timestamp
       if (user) {
         return user.devices.filter(
           (device) => device.lastSeenAt.getTime() === lastSeenAt.getTime()
         );
       }
-      // If no user was specified, return undefined
       return undefined;
     }
   }
